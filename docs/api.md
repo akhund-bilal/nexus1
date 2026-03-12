@@ -34,3 +34,8 @@ Health probe endpoint.
 
 ## `GET /websearch?q=<query>&limit=8`
 Runs live public web search against DuckDuckGo HTML endpoint and returns normalized web hits.
+
+
+## Notes
+- Web search is live and uses public search results only.
+- Platform analysis modules do not depend on external AI APIs.

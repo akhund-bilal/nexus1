@@ -36,3 +36,11 @@ def test_websearch_endpoint_returns_shape() -> None:
     body = res.json()
     assert body["query"]
     assert "results" in body
+
+
+def test_websearch_results_are_normalized_urls() -> None:
+    client = TestClient(app)
+    res = client.get("/api/v1/websearch", params={"q": "open source intelligence", "limit": 3})
+    assert res.status_code == 200
+    for item in res.json().get("results", []):
+        assert item["url"].startswith("http")

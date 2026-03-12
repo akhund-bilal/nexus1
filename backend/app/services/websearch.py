@@ -1,10 +1,26 @@
-from urllib.parse import quote_plus
+from urllib.parse import parse_qs, quote_plus, urlparse
 
 import httpx
 from bs4 import BeautifulSoup
 
 
 DUCKDUCKGO_HTML = "https://duckduckgo.com/html/?q={query}"
+
+
+def _normalize_duckduckgo_url(url: str) -> str:
+    if not url:
+        return url
+
+    if url.startswith("//"):
+        url = f"https:{url}"
+
+    parsed = urlparse(url)
+    if "duckduckgo.com" in parsed.netloc and parsed.path.startswith("/l/"):
+        qs = parse_qs(parsed.query)
+        uddg = qs.get("uddg")
+        if uddg and uddg[0]:
+            return uddg[0]
+    return url
 
 
 async def search_public_web(query: str, limit: int = 8) -> list[dict]:
@@ -33,7 +49,7 @@ async def search_public_web(query: str, limit: int = 8) -> list[dict]:
         if not link:
             continue
 
-        href = (link.get("href") or "").strip()
+        href = _normalize_duckduckgo_url((link.get("href") or "").strip())
         title = link.get_text(" ", strip=True)
         description = snippet.get_text(" ", strip=True) if snippet else ""
 

@@ -46,7 +46,7 @@ export function InvestigationDashboard() {
       <main className="content">
         <header className="topbar">
           <h1>Research Dashboard</h1>
-          <div className="status">SYSTEM ONLINE</div>
+          <div className="status">SYSTEM ONLINE · NO AI API</div>
         </header>
 
         <section className="search-box">

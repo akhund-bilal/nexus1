@@ -41,3 +41,9 @@ docker compose up --build
 
 ## Live web search endpoint
 - `GET /api/v1/websearch?q=<query>&limit=8` runs a live DuckDuckGo public search and returns normalized results.
+
+
+## No AI API dependency
+- NLP and scoring run locally in-process.
+- No OpenAI/Anthropic/Gemini or other paid AI API calls are required.
+- Live web search uses public DuckDuckGo HTML results only.
