@@ -79,6 +79,12 @@ export function InvestigationDashboard() {
             <ul>
               {result.profiles.map((p, idx) => <li key={idx}>{p.platform} / {p.handle}</li>)}
             </ul>
+            <h4>Live Web Search Hits</h4>
+            <ul>
+              {(result.web_results || []).slice(0, 6).map((r, idx) => (
+                <li key={idx}><a href={r.url} target="_blank" rel="noreferrer">{r.title}</a></li>
+              ))}
+            </ul>
           </section>
         )}
       </main>

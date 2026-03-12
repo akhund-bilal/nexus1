@@ -30,3 +30,7 @@ Health probe endpoint.
 - `GET /cases/{id}`
 - `POST /reports/{case_id}/export?format=pdf|html|json|csv`
 - `POST /watchlists`
+
+
+## `GET /websearch?q=<query>&limit=8`
+Runs live public web search against DuckDuckGo HTML endpoint and returns normalized web hits.

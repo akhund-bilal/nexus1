@@ -19,6 +19,7 @@ def test_search_endpoint_returns_comprehensive_payload() -> None:
     assert body["findings"]
     assert body["geo_signals"]
     assert body["relationships"]
+    assert "web_results" in body
 
 
 def test_dashboard_summary_endpoint() -> None:
@@ -26,3 +27,12 @@ def test_dashboard_summary_endpoint() -> None:
     res = client.get("/api/v1/dashboard/summary")
     assert res.status_code == 200
     assert "active_cases" in res.json()
+
+
+def test_websearch_endpoint_returns_shape() -> None:
+    client = TestClient(app)
+    res = client.get("/api/v1/websearch", params={"q": "open source intelligence", "limit": 3})
+    assert res.status_code == 200
+    body = res.json()
+    assert body["query"]
+    assert "results" in body

@@ -10,6 +10,7 @@ from app.models.entities import Case, Evidence, Profile, RiskScore, Subject, Tim
 from app.schemas.osint import DashboardSummary, RiskOut, SearchRequest, SearchResponse, TimelineEventOut
 from app.services.identity import identity_confidence
 from app.services.investigation import synthesize_findings
+from app.services.websearch import search_public_web
 from app.services.reporting import write_html_report
 
 router = APIRouter()
@@ -32,6 +33,7 @@ async def search(req: SearchRequest, db: Session = Depends(get_db)) -> SearchRes
     findings = []
     geo_signals = []
     relationships = []
+    web_results = []
 
     for ident in req.identifiers:
         subject = Subject(case_id=case.id, input_type=ident.input_type.value, value=ident.value)
@@ -43,6 +45,8 @@ async def search(req: SearchRequest, db: Session = Depends(get_db)) -> SearchRes
         findings.extend(module_payload["findings"])
         geo_signals.extend(module_payload["geo_signals"])
         relationships.extend(module_payload["relationships"])
+
+        web_results.extend(await search_public_web(ident.value, limit=5))
 
         for artifact in artifacts:
             conf = identity_confidence(ident.value, artifact["handle"])
@@ -112,6 +116,7 @@ async def search(req: SearchRequest, db: Session = Depends(get_db)) -> SearchRes
         findings=findings,
         geo_signals=geo_signals,
         relationships=relationships,
+        web_results=web_results,
         risk=RiskOut(
             identity_confidence=risk.identity_confidence,
             bot_likelihood=risk.bot_likelihood,
@@ -120,6 +125,12 @@ async def search(req: SearchRequest, db: Session = Depends(get_db)) -> SearchRes
             rationale=risk.rationale,
         ),
     )
+
+
+@router.get("/websearch")
+async def websearch(q: str, limit: int = 8) -> dict:
+    results = await search_public_web(q, limit=max(1, min(limit, 20)))
+    return {"query": q, "count": len(results), "results": results, "public_data_only": True}
 
 
 @router.get("/dashboard/summary", response_model=DashboardSummary)

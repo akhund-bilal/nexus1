@@ -57,6 +57,7 @@ class SearchResponse(BaseModel):
     findings: list[dict]
     geo_signals: list[dict]
     relationships: list[dict]
+    web_results: list[dict]
     risk: RiskOut
 
 

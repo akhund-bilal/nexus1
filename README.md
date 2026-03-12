@@ -3,7 +3,7 @@
 A working, modular OSINT investigation platform using **publicly available data only**.
 
 ## What is now working
-- Full FastAPI investigation workflow with case creation, profile discovery, timeline, findings, and risk scoring.
+- Full FastAPI investigation workflow with case creation, profile discovery, timeline, findings, live public web search, and risk scoring.
 - Dashboard summary API for active cases, tracked entities, flagged findings, and recent activity.
 - Case endpoints for listing and retrieving case details.
 - SQLite default for local run (no external DB required), with PostgreSQL support in Docker.
@@ -37,3 +37,7 @@ docker compose up --build
 - No private data exfiltration
 - No account takeover/hacking
 - No plaintext password exposure
+
+
+## Live web search endpoint
+- `GET /api/v1/websearch?q=<query>&limit=8` runs a live DuckDuckGo public search and returns normalized results.
