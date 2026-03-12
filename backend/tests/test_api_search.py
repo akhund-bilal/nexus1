@@ -44,3 +44,23 @@ def test_websearch_results_are_normalized_urls() -> None:
     assert res.status_code == 200
     for item in res.json().get("results", []):
         assert item["url"].startswith("http")
+
+
+def test_report_export_endpoint() -> None:
+    client = TestClient(app)
+    created = client.post(
+        "/api/v1/search",
+        json={
+            "case_name": "Report Case",
+            "description": "report",
+            "identifiers": [{"input_type": "username", "value": "reportuser"}],
+        },
+    )
+    case_id = created.json()["case_id"]
+
+    exported = client.get(f"/api/v1/reports/{case_id}/export", params={"format": "json"})
+    assert exported.status_code == 200
+    payload = exported.json()
+    assert payload["case_id"] == case_id
+    assert payload["format"] == "json"
+    assert payload["path"].endswith(".json")

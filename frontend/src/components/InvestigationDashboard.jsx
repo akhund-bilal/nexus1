@@ -79,6 +79,12 @@ export function InvestigationDashboard() {
             <ul>
               {result.profiles.map((p, idx) => <li key={idx}>{p.platform} / {p.handle}</li>)}
             </ul>
+            <h4>Export Reports</h4>
+            <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
+              <a href={`${API}/reports/${result.case_id}/export?format=html`} target="_blank" rel="noreferrer">HTML</a>
+              <a href={`${API}/reports/${result.case_id}/export?format=json`} target="_blank" rel="noreferrer">JSON</a>
+              <a href={`${API}/reports/${result.case_id}/export?format=csv`} target="_blank" rel="noreferrer">CSV</a>
+            </div>
             <h4>Live Web Search Hits</h4>
             <ul>
               {(result.web_results || []).slice(0, 6).map((r, idx) => (

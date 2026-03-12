@@ -68,3 +68,9 @@ class DashboardSummary(BaseModel):
     total_data_points: int
     recent_cases: list[dict]
     high_severity_findings: list[dict]
+
+
+class ExportResponse(BaseModel):
+    case_id: int
+    format: str
+    path: str

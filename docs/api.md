@@ -39,3 +39,7 @@ Runs live public web search against DuckDuckGo HTML endpoint and returns normali
 ## Notes
 - Web search is live and uses public search results only.
 - Platform analysis modules do not depend on external AI APIs.
+
+
+## `GET /reports/{case_id}/export?format=html|json|csv`
+Generates report artifacts on demand from stored case data and returns output path metadata.

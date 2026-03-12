@@ -47,3 +47,7 @@ docker compose up --build
 - NLP and scoring run locally in-process.
 - No OpenAI/Anthropic/Gemini or other paid AI API calls are required.
 - Live web search uses public DuckDuckGo HTML results only.
+
+
+## Report export endpoint
+- `GET /api/v1/reports/{case_id}/export?format=html|json|csv` generates and returns report file metadata.
