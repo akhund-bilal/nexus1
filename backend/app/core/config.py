@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     api_prefix: str = "/api/v1"
     debug: bool = False
 
-    postgres_dsn: str = "postgresql+psycopg2://nexus:nexus@postgres:5432/nexus"
+    postgres_dsn: str = "sqlite:///./nexus1.db"
     redis_url: str = "redis://redis:6379/0"
     neo4j_uri: str = "bolt://neo4j:7687"
     neo4j_user: str = "neo4j"

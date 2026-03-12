@@ -5,3 +5,6 @@ backend/.venv/
 frontend/node_modules/
 frontend/dist/
 reports/case_*.html
+
+*.db
+backend/reports/case_*.html

@@ -54,4 +54,16 @@ class SearchResponse(BaseModel):
     case_id: int
     profiles: list[ProfileOut]
     timeline: list[TimelineEventOut]
+    findings: list[dict]
+    geo_signals: list[dict]
+    relationships: list[dict]
     risk: RiskOut
+
+
+class DashboardSummary(BaseModel):
+    active_cases: int
+    tracked_entities: int
+    flagged_findings: int
+    total_data_points: int
+    recent_cases: list[dict]
+    high_severity_findings: list[dict]
